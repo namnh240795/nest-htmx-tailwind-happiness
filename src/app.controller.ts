@@ -1,19 +1,18 @@
-import { Controller, Get, Post, Render } from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Response } from 'express';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('index')
-  getHello() {
-    return this.appService.getHello();
+  getHello(@Res() res: Response) {
+    return res.sendFile('index.html', { root: 'views' });
   }
 
   @Get('/mini')
-  @Render('mini')
-  getMini() {
-    return this.appService.getHello();
+  getMini(@Res() res: Response) {
+    return res.sendFile('mini.html', { root: 'views' });
   }
 }
